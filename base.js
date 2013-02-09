@@ -224,8 +224,6 @@ $(function(){
         $("input[name=\"export\"]").val(exportToJSON());
     });
 
-
-
     /*
     running test
     */
@@ -233,7 +231,8 @@ $(function(){
     {
         var word = $(".testRunning input[name=\"amInput\"]").val();
         var am = initAutomaton();
-        var result = am.input(word)
+        // var result = am.input(word);
+        var result = am_input(am, word);
         if (result)
             $(".testRunning .amInputResults").text("recognize.");
         else
