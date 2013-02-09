@@ -7,6 +7,7 @@ var myAutoMaton = function(alphabets, states, transFunc, stateInit, statesFin)
     this.statesFin = statesFin;
   
     this.input = function(w)
+    /*問題１：wを認識する場合はtrue、しない場合はfalseを返す*/
     {
         var queue = [[stateInit,w]];
         var checkList = [];
