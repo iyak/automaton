@@ -15,7 +15,7 @@ $(function(){
         if (input != "")
             alphabets = input.split(/[ ,]*,[ ,]*/);
         for (var i = 0; i < alphabets.length; i++)
-            if (alphabets[i].length != 1 || alphabets[i] == "ε")
+            if (alphabets[i].length != 1)
                 alphabets.splice(i--, 1);
         /*
         allow epsilon transition or not
@@ -87,7 +87,19 @@ $(function(){
     */
     var inportJSON = function()
     {
-        var am = JSON.parse($(".program input[name=\"inport\"]").val());
+        var am_json = JSON.parse($(".program input[name=\"inport\"]").val());
+        /*
+        add alphabets
+        */
+        $(".program .alphabets input[name=\"alphabets\"]").val(am_json.alphabets.join(","));
+        addAlphabets(readInputAlphabets());
+        /*
+        add states
+        */
+        for (var i = 0; i < am_json.states.length; ++i)
+        {
+            addState(am_json.states[i]);
+        }
         $(".program input[name=\"alphabets\"]").val(am.alphabets.join(","));
         readInputAlphabets();
     }
@@ -96,53 +108,65 @@ $(function(){
     /*
     input alphabets
     */
-    var addAlphabets = function()
+    var addAlphabets = function(as)
     {
-        readInputAlphabets();
         $(".program .labelNext").removeClass("chkd");
         $(".program .statesNext").removeClass("chkd");
-        loop: for (var i = 0; i < alphabets.length; i++)
+        for (var i = 0; i < alphabets.length; i++)
         {
-            /*
-            continue if already exists
-            */
-            var attrs = $(".program .labelNext").map(function()
-            {
-                return $(this).attr("for");
-            });
-            for (var j = attrs.length - 1; j >= 0; j--)
-            {
-                if (attrs[j] == alphabets[i])
-                {
-                    $(".program .labelNext[for=\"" + attrs[j] + "\"]")
-                        .addClass("chkd");
-                    $(".program .statesNext[for=\"" + attrs[j] + "\"]")
-                        .addClass("chkd");
-                    continue loop;
-                }
-            }
-            /*
-            add column if new
-            */
-            var alph = alphabets[i];
-            var html_th = "<th class=\"labelNext chkd\" for=\""
-                        + alphabets[i] + "\">nxt(" + alph + ")</th>";
-            var html_td = "<td class=\"statesNext chkd\" for=\""
-                        + alphabets[i] + "\"><input name=\"statesNext\" size=5/></td>";
-            $(".program .statesTable .th_beforeHere").before(html_th);
-            $(".program .statesTable .td_beforeHere").before(html_td);
+            addAlphabet(as[i]);
         }
         $(".program .labelNext").not(".chkd").remove();
         $(".program .statesNext").not(".chkd").remove();
         readInputAlphabets();
     }
-    $("button[name=\"okAlphabets\"]").on("click", addAlphabets);
-    $(".program input[name=\"alphabets\"]").on("focusout", addAlphabets);
+
+    var addAlphabet = function(a)
+    {
+        /*
+        return if already exists
+        */
+        var attrs = $(".program .labelNext").map(function()
+        {
+            return $(this).attr("for");
+        });
+        for (var j = attrs.length - 1; j >= 0; j--)
+        {
+            if (attrs[j] == a)
+            {
+                $(".program .labelNext[for=\"" + attrs[j] + "\"]")
+                    .addClass("chkd");
+                $(".program .statesNext[for=\"" + attrs[j] + "\"]")
+                    .addClass("chkd");
+                return;
+            }
+        }
+        /*
+        add column if new
+        */
+        var html_th = "<th class=\"labelNext chkd\" for=\""
+                    + a + "\">nxt(" + a + ")</th>";
+        var html_td = "<td class=\"statesNext chkd\" for=\""
+                    + a + "\"><input name=\"statesNext\" size=5/></td>";
+        $(".program .statesTable .th_beforeHere").before(html_th);
+        $(".program .statesTable .td_beforeHere").before(html_td);
+    }
+    $("button[name=\"okAlphabets\"]").on("click", function()
+    {
+        addAlphabets(readInputAlphabets());
+    });
+    $(".program input[name=\"alphabets\"]").on("focusout", function()
+    {
+        addAlphabets(readInputAlphabets());
+    });
     $(".program input[name=\"alphabets\"]").on("keydown", function(e)
     {
-        if (e.which == 13) addAlphabets();
+        if (e.which == 13) addAlphabets(readInputAlphabets());
     });
-    $(".program input[name=\"allowEpsilon\"]").on("change", addAlphabets);
+    $(".program input[name=\"allowEpsilon\"]").on("change", function()
+    {
+        addAlphabets(readInputAlphabets());
+    });
 
     /*
     add state
@@ -231,7 +255,6 @@ $(function(){
     {
         var word = $(".testRunning input[name=\"amInput\"]").val();
         var am = initAutomaton();
-        // var result = am.input(word);
         var result = am_input(am, word);
         if (result)
             $(".testRunning .amInputResults").text("recognize.");
@@ -282,5 +305,5 @@ $(function(){
         return uniqueArray;
     }
 
-    addAlphabets();
+    addAlphabets(readInputAlphabets());
 });
