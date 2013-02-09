@@ -1,5 +1,6 @@
 var myAutoMaton = function(alphabets, states, transFunc, stateInit, statesFin)
 {
+    /* test */
     this.alphabets = alphabets;
     this.states    = states;
     this.transFunc = transFunc;
