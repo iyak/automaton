@@ -25,7 +25,7 @@ var am_mondai2 = function(am, n)
 	}
 
 	for(var i = 0; i < words.length; i++){
-		if(am_mondai1(am,words[i]))
+		if(am_input(am,words[i]))
 			k++;
 	}
 

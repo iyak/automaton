@@ -82,6 +82,17 @@ $(function(){
         return statesFin;
     }
 
+    var readInputAutomaton = function()
+    {
+        am = new myAutoMaton();
+        am.alphabets = readInputAlphabets();
+        am.states = readInputStates();
+        am.transFunc = readInputTransFunc();
+        am.stateInit = readInputStateInit();
+        am.statesFin = readInputStatesFin();
+
+        return am;
+    }
     /*
     inport JSON data
     */
