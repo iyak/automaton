@@ -21,7 +21,15 @@ $(function(){
         allow epsilon transition or not
         */
         if ($(".program .alphabets input[name=\"allowEpsilon\"]").is(":checked"))
+        {
             alphabets.push("ε");
+        }
+        else
+        {
+            for (var i = 0; i < alphabets.length; ++i)
+                if (alphabets[i] == "ε")
+                    alphabets.splice(i, 1);
+        }
         alphabets = unique(alphabets);
         $(".program .alphabets input[name=\"alphabets\"]").val(alphabets.join(","));
         return alphabets;
@@ -89,19 +97,40 @@ $(function(){
     {
         var am_json = JSON.parse($(".program input[name=\"inport\"]").val());
         /*
-        add alphabets
+        clear states
         */
-        $(".program .alphabets input[name=\"alphabets\"]").val(am_json.alphabets.join(","));
-        addAlphabets(readInputAlphabets());
-        /*
-        add states
-        */
-        for (var i = 0; i < am_json.states.length; ++i)
+        $(".statesTable tbody").remove();
+        $(".statesTable").load("index.html .statesTable tbody", function()
         {
-            addState(am_json.states[i]);
-        }
-        $(".program input[name=\"alphabets\"]").val(am.alphabets.join(","));
-        readInputAlphabets();
+            for (var i = 0; i < am_json.states.length; ++i)
+            {
+                var init = (am_json.states[i] == am_json.stateInit);
+                var fin = false;
+                for (var j = 0; j < am_json.statesFin.length; ++j)
+                    if (am_json.states[i] == am_json.statesFin[j])
+                        fin = true;
+                addState(am_json.states[i], init, fin);
+            }
+            /*remove dammy state (the first state)*/
+            $(".program .state").filter(":first").remove();
+            /*
+            add alphabets
+            */
+            $(".program input[name=\"alphabets\"]").val(am_json.alphabets.join(","));
+            $(".program .alphabets input[name=\"alphabets\"]").val(am_json.alphabets.join(","));
+            for (var i = 0; i < am_json.alphabets.length; ++i)
+                if (am_json.alphabets[i] == "ε")
+                    $(".program .alphabets input[name=\"allowEpsilon\"]").attr("checked", true);
+            addAlphabets(readInputAlphabets());
+            /*
+            add transition relation
+            */
+            for (var i = 0; i < am_json.states.length; ++i)
+                for (var j = 0; j < am_json.alphabets.length; ++j)
+                    $(".program .state[stateId=\"" + am_json.states[i] + "\"]")
+                        .find(".statesNext[for=\"" + am_json.alphabets[j] + "\"] input")
+                            .val(am_json.transFunc[am_json.states[i]][am_json.alphabets[j]]);
+        });
     }
     $(".program button[name=\"inport\"]").on("click", inportJSON);
 
@@ -171,7 +200,7 @@ $(function(){
     /*
     add state
     */
-    var addState = function(stateId)
+    var addState = function(stateId, isInit, isFin)
     {
         readInputAlphabets();
         readInputStates();
@@ -199,13 +228,22 @@ $(function(){
             loop: for (var i = 0; i < 100; i++)
             {
                 for (var j = 0; j < states.length; j++)
-                {
                     if (i == Number(states[j]))
                         continue loop;
-                }
                 stateNew.find("input[name=\"stateId\"]").val(i);
                 break;
             }
+        }
+        /*
+        set init / final
+        */
+        if (isInit !== undefined && isInit === true)
+        {
+            stateNew.find("input[name=\"isInit\"]").attr("checked", true);
+        }
+        if (isFin !== undefined && isFin === true)
+        {
+            stateNew.find("input[name=\"isFin\"]").attr("checked", true);
         }
         readInputStates();
     }

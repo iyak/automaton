@@ -50,34 +50,36 @@
                 <h3>states</h3>
                 <label class="tab">edit state transition relation. mark off by comma.</label>
                 <table class="statesTable tab">
-                    <tr>
-                        <th>state</th>
-                        <!-- next states for each alphabet   -->
-                        <!-- implementation is by javascript -->
-                        <th class="th_beforeHere"><!-- dammy --></th>
-                        <th>init?</th>
-                        <th>fin?</th>
-                        <th><!-- removal control field --></th>
-                        <th><!-- notation field --></th>
-                    </tr>
-                    <tr class="state">
-                        <td>
-                            <input name="stateId" size=1 value="0"></input>
-                        </td>
-                        <!-- next states for each alphabet   -->
-                        <!-- implementation is by javascript -->
-                        <td class="td_beforeHere"><!-- dammy --></td>
-                        <td>
-                            <input name="isInit" type="radio" checked></input>
-                        </td>
-                        <td>
-                            <input name="isFin" type="checkbox"></input>
-                        </td>
-                        <td>
-                            <button type="button" name="rmvState" style="width:30px">-</button>
-                        </td>
-                        <td class="stateNote" id="notice"><!-- notation field --></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <th>state</th>
+                            <!-- next states for each alphabet   -->
+                            <!-- implementation is by javascript -->
+                            <th class="th_beforeHere"><!-- dammy --></th>
+                            <th>init?</th>
+                            <th>fin?</th>
+                            <th><!-- removal control field --></th>
+                            <th><!-- notation field --></th>
+                        </tr>
+                        <tr class="state">
+                            <td>
+                                <input name="stateId" size=1 value="0"></input>
+                            </td>
+                            <!-- next states for each alphabet   -->
+                            <!-- implementation is by javascript -->
+                            <td class="td_beforeHere"><!-- dammy --></td>
+                            <td>
+                                <input name="isInit" type="radio" checked></input>
+                            </td>
+                            <td>
+                                <input name="isFin" type="checkbox"></input>
+                            </td>
+                            <td>
+                                <button type="button" name="rmvState" style="width:30px">-</button>
+                            </td>
+                            <td class="stateNote" id="notice"><!-- notation field --></td>
+                        </tr>
+                    </tbody>
                 </table>
                 <div class="statesControl tab">
                     <button type="button" name="addState" width="100px" style="width:30px">+</button>
