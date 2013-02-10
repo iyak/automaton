@@ -347,25 +347,7 @@ $(function(){
 
     /* 
     solve mondai2
-            <div class="Mondai2">
-            <h2>Mondai2</h2>
-            <p class="discription">
-                <dl>
-                    <dt>required</dt>
-                    <dd>an automaton and number</dd>
-                    <dt>return</dt>
-                    <dd>the number of recognized words whose length is the number</dd>
-                </dl>
-            </p>
-            <div class="tab">
-                <split>number</split>
-                <input name="amInput2-1"/>
-                <split>automaton</split>
-                <input name="amInput2-2"/>
-                <button type="button" name="solve2">input</button>
-                <span class="amInputResults" id="ans_mon2"></span>
-            </div>
-        </div>
+
     */
     var mondai2_fun = function()
     {
