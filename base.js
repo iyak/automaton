@@ -90,17 +90,7 @@ $(function(){
         return statesFin;
     }
 
-    var readInputAutomaton = function()
-    {
-        am = new myAutoMaton();
-        am.alphabets = readInputAlphabets();
-        am.states = readInputStates();
-        am.transFunc = readInputTransFunc();
-        am.stateInit = readInputStateInit();
-        am.statesFin = readInputStatesFin();
 
-        return am;
-    }
     /*
     inport JSON data
     */
@@ -354,5 +344,38 @@ $(function(){
         return uniqueArray;
     }
 
+
+    /* 
+    solve mondai2
+            <div class="Mondai2">
+            <h2>Mondai2</h2>
+            <p class="discription">
+                <dl>
+                    <dt>required</dt>
+                    <dd>an automaton and number</dd>
+                    <dt>return</dt>
+                    <dd>the number of recognized words whose length is the number</dd>
+                </dl>
+            </p>
+            <div class="tab">
+                <split>number</split>
+                <input name="amInput2-1"/>
+                <split>automaton</split>
+                <input name="amInput2-2"/>
+                <button type="button" name="solve2">input</button>
+                <span class="amInputResults" id="ans_mon2"></span>
+            </div>
+        </div>
+    */
+    var mondai2_fun = function()
+    {
+        var am = JSON.parse($(".mondai2 .tab input[name=\"amInput2-2\"]").val());
+        var mondai2 = am_mondai2( am, parseInt( $(".mondai2 .tab input[name=\"amInput2-1\"]").val()));
+        $(".mondai2 .tab .amInputResults2").text(mondai2);
+
+    }
+    $(".mondai2 button[name=\"solve2\"]").on("click",mondai2_fun);
+
     addAlphabets(readInputAlphabets());
 });
+
