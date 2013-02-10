@@ -90,17 +90,7 @@ $(function(){
         return statesFin;
     }
 
-    var readInputAutomaton = function()
-    {
-        am = new myAutoMaton();
-        am.alphabets = readInputAlphabets();
-        am.states = readInputStates();
-        am.transFunc = readInputTransFunc();
-        am.stateInit = readInputStateInit();
-        am.statesFin = readInputStatesFin();
 
-        return am;
-    }
     /*
     inport JSON data
     */
@@ -354,5 +344,20 @@ $(function(){
         return uniqueArray;
     }
 
+
+    /* 
+    solve mondai2
+
+    */
+    var mondai2_fun = function()
+    {
+        var am = JSON.parse($(".mondai2 .tab input[name=\"amInput2-2\"]").val());
+        var mondai2 = am_mondai2( am, parseInt( $(".mondai2 .tab input[name=\"amInput2-1\"]").val()));
+        $(".mondai2 .tab .amInputResults2").text(mondai2);
+
+    }
+    $(".mondai2 button[name=\"solve2\"]").on("click",mondai2_fun);
+
     addAlphabets(readInputAlphabets());
 });
+
