@@ -13,6 +13,8 @@
         <script type="text/javascript" src="am_mondai5.js"></script>
         <script type="text/javascript" src="am_mondai6.js"></script>
         <script type="text/javascript" src="re_mondai7.js"></script>
+        <script type="text/javascript" src="am_determinize.js"></script>
+        <script type="text/javascript" src="utility.js"></script>
         <script type="text/javascript" src="base.js"></script>
         <link rel="stylesheet" href="style.css" type="text/css"></link>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -85,25 +87,33 @@
                     <button type="button" name="addState" width="100px" style="width:30px">+</button>
                 </div>
             </div>
-        </div>
-        <div class="testRunning">
-            <h2>testrun</h2>
-            <div class="tab">
-                <input name="amInput"/>
-                <button type="button" name="amInput">input</button>
-                <span class="amInputResults" id="notice"></span>
+            <div class="testRunning tab">
+                <h3>testrun</h3>
+                <div class="tab">
+                    <input name="amInput"/>
+                    <button type="button" name="amInput">input</button>
+                    <span class="amInputResults" id="notice"></span>
+                </div>
+            </div>
+            <div class="export tab">
+                <h3>export</h3>
+                <div class="tab">
+                    <button type="button" name="export">export</button>
+                    <input type="text" name="export" readonly>
+                    <label for="export">copy it.</label>
+                </div>
             </div>
         </div>
         <div class="Mondai2">
             <h2>Mondai2</h2>
-            <p class="discription">
+            <div class="discription tab">
                 <dl>
                     <dt>required</dt>
                     <dd>an automaton and number</dd>
                     <dt>return</dt>
                     <dd>the number of recognized words whose length is the number</dd>
                 </dl>
-            </p>
+            </div>
             <div class="tab">
                 <split>number</split>
                 <input name="amInput2-1"/>
@@ -113,14 +123,21 @@
                 <span class="amInputResults2" id="ans_mon2"></span>
             </div>
         </div>
-
-
-        <div class="export">
-            <h2>export</h2>
+        <div class="determinize">
+            <h2>determinize</h2>
+            <div class="discription tab">
+                <dl>
+                    <dt>required</dt>
+                    <dd>an automaton to be determinized</dd>
+                    <dt>return</dt>
+                    <dd>the deterministic automaton</dd>
+                </dl>
+            </div>
             <div class="tab">
-                <button type="button" name="export">export</button>
-                <input type="text" name="export" readonly>
-                <label for="export">copy it.</label>
+                <split>automaton</split>
+                <input name="amInputDeterminize"/>
+                <button type="button" name="solveDeterminize">input</button>
+                <input type="text" name="ans_determinize" readonly>
             </div>
         </div>
     </body>

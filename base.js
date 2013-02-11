@@ -294,6 +294,7 @@ $(function(){
     {
         var word = $(".testRunning input[name=\"amInput\"]").val();
         var am = initAutomaton();
+        var am = am_determinize(am);
         var result = am_input(am, word);
         if (result)
             $(".testRunning .amInputResults").text("recognize.");
@@ -331,20 +332,6 @@ $(function(){
         setTimeout(query ,sec * 1000);
     }
 
-    var unique = function(array)
-    {
-        var storage = {};
-        var uniqueArray = [];
-        for (var i = 0; i < array.length; i++)
-            if (!(array[i] in storage))
-            {
-                storage[array[i]] = true;
-                uniqueArray.push(array[i]);
-            }
-        return uniqueArray;
-    }
-
-
     /* 
     solve mondai2
 
@@ -358,6 +345,23 @@ $(function(){
     }
     $(".mondai2 button[name=\"solve2\"]").on("click",mondai2_fun);
 
+    var determinize = function()
+    {
+        var am_json = JSON.parse($(".determinize input[name=\"amInputDeterminize\"]").val());
+        var am = new myAutoMaton
+        (
+            am_json.alphabets,
+            am_json.states,
+            am_json.transFunc,
+            am_json.stateInit,
+            am_json.statesFin
+        );
+        return am.determinize();
+    }
+    $("button[name=\"solveDeterminize\"]").on("click", function()
+    {
+        $("input[name=\"ans_determinize\"]").val(JSON.stringify(determinize()));
+    });
+
     addAlphabets(readInputAlphabets());
 });
-

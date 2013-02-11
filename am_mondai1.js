@@ -24,3 +24,7 @@ var am_input = function(am, w)
     }
     return false;
 }
+
+myAutoMaton.prototype.input = function(w) {
+    return am_input(this, w);
+};
