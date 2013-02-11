@@ -117,6 +117,7 @@ $(function(){
             /*
             add alphabets
             */
+            $(".program .alphabets input[name=\"allowEpsilon\"]").attr("checked", false);
             $(".program input[name=\"alphabets\"]").val(am_json.alphabets.join(","));
             $(".program .alphabets input[name=\"alphabets\"]").val(am_json.alphabets.join(","));
             for (var i = 0; i < am_json.alphabets.length; ++i)
