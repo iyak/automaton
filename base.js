@@ -295,7 +295,6 @@ $(function(){
     {
         var word = $(".testRunning input[name=\"amInput\"]").val();
         var am = initAutomaton();
-        var am = am_determinize(am);
         var result = am_input(am, word);
         if (result)
             $(".testRunning .amInputResults").text("recognize.");
@@ -324,6 +323,19 @@ $(function(){
         );
     }
 
+    var ParseAutomatonByString = function(am_string)
+    {
+        var am_json = JSON.parse(am_string);
+        return new myAutoMaton
+        (
+            am_json.alphabets,
+            am_json.states,
+            am_json.transFunc,
+            am_json.stateInit,
+            am_json.statesFin
+        );
+    }
+
     var notice = function(stateId, msg, sec)
     {
         if (sec === undefined) sec = 3;
@@ -348,20 +360,22 @@ $(function(){
 
     var determinize = function()
     {
-        var am_json = JSON.parse($(".determinize input[name=\"amInputDeterminize\"]").val());
-        var am = new myAutoMaton
-        (
-            am_json.alphabets,
-            am_json.states,
-            am_json.transFunc,
-            am_json.stateInit,
-            am_json.statesFin
-        );
+        var am = ParseAutomatonByString($(".determinize input[name=\"amInputDeterminize\"]").val());
         return am.determinize();
     }
     $("button[name=\"solveDeterminize\"]").on("click", function()
     {
         $("input[name=\"ans_determinize\"]").val(JSON.stringify(determinize()));
+    });
+
+    var minimize = function()
+    {
+        var am = ParseAutomatonByString($(".minimize input[name=\"amInputMinimize\"]").val());
+        return am.minimize();
+    }
+    $("button[name=\"solveMinimize\"]").on("click", function()
+    {
+        $("input[name=\"ans_minimize\"]").val(JSON.stringify(minimize()));
     });
 
     addAlphabets(readInputAlphabets());

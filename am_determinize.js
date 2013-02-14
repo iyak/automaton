@@ -1,21 +1,5 @@
 var am_determinize = function(am)
 {
-    /*
-    既に決定性なものは無視
-    */
-    loop: for (var i = am.states.length - 1; i >= 0; i--)
-    {
-        if (am.transFunc[am.states[i]]["ε"] !== undefined)
-            if (am.transFunc[am.states[i]]["ε"].length > 0)
-                break;
-        for (var j = am.alphabets.length - 1; j >= 0; j--)
-        {
-            if (am.transFunc[am.states[i]][am.alphabets[j]].length > 1)
-                break loop;
-        };
-        if (i == 0) return am;
-    };
-
     var epsTrans = function(states)
     /*
     状態の集合をうけ、要素のいずれかからε遷移のみで辿りつける状態の集合を返す。
@@ -38,12 +22,6 @@ var am_determinize = function(am)
             })(states[i]);
         };
         return epsStates;
-    }
-
-    var formatStateSet = function(a)
-    {
-        if (a.length == 0) return "Φ";
-        return "{" + a.sort().join("|") + "}";
     }
 
     var alphabets = [];

@@ -24,3 +24,9 @@ return its power set (array of arrays)
     return subsets.concat(subsets.map(function(x)
     {return x.concat(a[i]);}));
 }
+
+var formatStateSet = function(a)
+{
+    if (a.length == 0) return "Φ";
+    return a.sort().join("|");
+}

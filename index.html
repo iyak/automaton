@@ -8,7 +8,7 @@
         <script type="text/javascript" src="am.js"></script>
         <script type="text/javascript" src="am_mondai1.js"></script>
         <script type="text/javascript" src="am_mondai2.js"></script>
-        <script type="text/javascript" src="am_mondai3.js"></script>
+        <script type="text/javascript" src="am_minimize.js"></script>
         <script type="text/javascript" src="am_mondai4.js"></script>
         <script type="text/javascript" src="am_mondai5.js"></script>
         <script type="text/javascript" src="am_mondai6.js"></script>
@@ -108,7 +108,7 @@
             <h2>Mondai2</h2>
             <div class="discription tab">
                 <dl>
-                    <dt>required</dt>
+                    <dt>require</dt>
                     <dd>an automaton and number</dd>
                     <dt>return</dt>
                     <dd>the number of recognized words whose length is the number</dd>
@@ -127,7 +127,7 @@
             <h2>determinize</h2>
             <div class="discription tab">
                 <dl>
-                    <dt>required</dt>
+                    <dt>require</dt>
                     <dd>an automaton to be determinized</dd>
                     <dt>return</dt>
                     <dd>the deterministic automaton</dd>
@@ -138,6 +138,23 @@
                 <input name="amInputDeterminize"/>
                 <button type="button" name="solveDeterminize">input</button>
                 <input type="text" name="ans_determinize" readonly>
+            </div>
+        </div>
+        <div class="minimize">
+            <h2>minimize</h2>
+            <div class="discription tab">
+                <dl>
+                    <dt>require</dt>
+                    <dd>an automaton to be minized</dd>
+                    <dt>return</dt>
+                    <dd>the minized deterministic automaton</dd>
+                </dl>
+            </div>
+            <div class="tab">
+                <split>automaton</split>
+                <input name="amInputMinimize"/>
+                <button type="button" name="solveMinimize">input</button>
+                <input type="text" name="ans_minimize" readonly>
             </div>
         </div>
     </body>
