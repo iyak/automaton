@@ -34,43 +34,51 @@ var am_minimize = function(am)
     /*
     fill up markList
     */
-    for (var i = am.states.length - 1; i >= 0; i--)
-    {
-        for (var j = markList[am.states[i]].length - 1; j >= 0; j--)
+    do{
+        var update = false;
+        for (var i = am.states.length - 1; i >= 0; i--)
         {
-            if (markList[am.states[i]][am.states[j]] !== true)
-                continue;
-            /*
-            look for other states from which can reach
-            these two states with one same character.
-            */
-            for (var k = am.alphabets.length - 1; k >= 0; k--)
+            for (var j = markList[am.states[i]].length - 1; j >= 0; j--)
             {
-                var identicalSet = [[],[]];
-                for (var l = am.states.length - 1; l >= 0; l--)
+                if (markList[am.states[i]][am.states[j]] !== true)
+                    continue;
+                /*
+                look for other states from which can reach
+                these two states with one same character.
+                */
+                for (var k = am.alphabets.length - 1; k >= 0; k--)
                 {
-                    var s = am.transFunc[am.states[l]][am.alphabets[k]][0];
-                    if (s == am.states[i])
-                        identicalSet[0].push(am.states[l]);
-                    else if (s == am.states[j])
-                        identicalSet[1].push(am.states[l]);
-                };
-                for (var l = identicalSet[0].length - 1; l >= 0; l--)
-                {
-                    for (var m = identicalSet[1].length - 1; m >= 0; m--)
+                    var identicalSet = [[],[]];
+                    for (var l = am.states.length - 1; l >= 0; l--)
                     {
-                        markList[identicalSet[0][l]][identicalSet[1][m]] = true;
-                        markList[identicalSet[1][m]][identicalSet[0][l]] = true;
+                        var s = am.transFunc[am.states[l]][am.alphabets[k]][0];
+                        if (s == am.states[i])
+                            identicalSet[0].push(am.states[l]);
+                        else if (s == am.states[j])
+                            identicalSet[1].push(am.states[l]);
+                    };
+                    for (var l = identicalSet[0].length - 1; l >= 0; l--)
+                    {
+                        for (var m = identicalSet[1].length - 1; m >= 0; m--)
+                        {
+                            if (markList[identicalSet[0][l]][identicalSet[1][m]])
+                                continue;
+                            if (markList[identicalSet[1][m]][identicalSet[0][l]])
+                                continue;
+                            markList[identicalSet[0][l]][identicalSet[1][m]] = true;
+                            markList[identicalSet[1][m]][identicalSet[0][l]] = true;
+                            update = true;
+                        };
                     };
                 };
             };
         };
-    };
+    } while (update);
     /*
     build equevalence relation between states according to markList
     */
-    for (var i = am.states.length - 1; i >= 0; i--)
-        for (var j = am.states.length - 1; j >= 0; j--)
+    for (var i = am.states.length - 1; i > 0; i--)
+        for (var j = markList[am.states[i]].length - 1; j >= 0; j--)
             if (markList[am.states[i]][am.states[j]] !== true)
                 markList[am.states[i]].root
                     = markList[am.states[j]].root
