@@ -34,7 +34,8 @@ var am_minimize = function(am)
     /*
     fill up markList
     */
-    do{
+    do
+    {
         var update = false;
         for (var i = am.states.length - 1; i >= 0; i--)
         {
